@@ -1,21 +1,84 @@
-Replacing Angular starter template with auto parts exchange platform 
 <div class="auto-parts-app">
-   Header 
+  <!-- Added sidebar overlay -->
+  <div class="sidebar-overlay" [class.active]="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+  <!-- Added sidebar -->
+  <aside class="sidebar" [class.open]="isSidebarOpen">
+    <div class="sidebar-header">
+      <h3>🔧 Menu</h3>
+      <button class="close-btn" (click)="toggleSidebar()">×</button>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <button class="nav-item" [class.active]="activeTab === 'dashboard'" (click)="setActiveTab('dashboard')">
+        📊 Dashboard
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'browse'" (click)="setActiveTab('browse')">
+        🔍 Browse Parts
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'my-parts'" (click)="setActiveTab('my-parts')">
+        📦 My Parts
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'messages'" (click)="setActiveTab('messages')">
+        💬 Messages
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'favorites'" (click)="setActiveTab('favorites')">
+        ❤️ Favorites
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'orders'" (click)="setActiveTab('orders')">
+        📋 Orders
+      </button>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="nav-item" (click)="openLogin()">
+        🔑 Login
+      </button>
+      <button class="nav-item" (click)="openRegister()">
+        📝 Register
+      </button>
+    </div>
+  </aside>
+
+  <!-- Header -->
   <header class="header">
     <div class="container">
       <div class="header-content">
+        <!-- Added hamburger menu button -->
+        <button class="hamburger-btn" (click)="toggleSidebar()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        
         <div class="logo">
           <h1>🔧 AutoParts Exchange</h1>
           <p>Your trusted middleman for auto parts</p>
         </div>
+        
         <nav class="nav">
           <button class="btn btn-secondary" (click)="onListPart()">List a Part</button>
+          <!-- Added settings button -->
+          <button class="settings-btn" (click)="toggleSettings()">⚙️</button>
         </nav>
       </div>
     </div>
   </header>
 
-   Hero Section 
+  <!-- Added settings dropdown -->
+  <div class="settings-dropdown" [class.open]="isSettingsOpen">
+    <div class="settings-content">
+      <h4>Settings</h4>
+      <button class="settings-item">🌙 Dark Mode</button>
+      <button class="settings-item">🔔 Notifications</button>
+      <button class="settings-item">👤 Profile</button>
+      <button class="settings-item">🛡️ Privacy</button>
+      <button class="settings-item">❓ Help</button>
+      <button class="settings-item">🚪 Logout</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
   <section class="hero">
     <div class="container">
       <div class="hero-content">
@@ -48,7 +111,7 @@ Replacing Angular starter template with auto parts exchange platform
     </div>
   </section>
 
-   Featured Parts 
+  <!-- Featured Parts -->
   <section class="featured-parts">
     <div class="container">
       <h3>Featured Parts</h3>
@@ -79,7 +142,7 @@ Replacing Angular starter template with auto parts exchange platform
     </div>
   </section>
 
-   How It Works 
+  <!-- How It Works -->
   <section class="how-it-works">
     <div class="container">
       <h3>How It Works</h3>
@@ -105,7 +168,7 @@ Replacing Angular starter template with auto parts exchange platform
     </div>
   </section>
 
-   CTA Section 
+  <!-- CTA Section -->
   <section class="cta-section">
     <div class="container">
       <div class="cta-content">
@@ -119,7 +182,7 @@ Replacing Angular starter template with auto parts exchange platform
     </div>
   </section>
 
-   Footer 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -154,4 +217,60 @@ Replacing Angular starter template with auto parts exchange platform
       </div>
     </div>
   </footer>
+
+  <!-- Added login modal -->
+  <div class="modal-overlay" [class.active]="isLoginOpen" (click)="closeModals()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Login</h3>
+        <button class="close-btn" (click)="closeModals()">×</button>
+      </div>
+      <form class="modal-form" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="loginData.email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="loginData.password" name="password" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Login</button>
+          <button type="button" class="btn btn-secondary" (click)="openRegister()">Register Instead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Added register modal -->
+  <div class="modal-overlay" [class.active]="isRegisterOpen" (click)="closeModals()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Register</h3>
+        <button class="close-btn" (click)="closeModals()">×</button>
+      </div>
+      <form class="modal-form" (ngSubmit)="onRegister()">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" [(ngModel)]="registerData.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="registerData.email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="registerData.password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" [(ngModel)]="registerData.confirmPassword" name="confirmPassword" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Register</button>
+          <button type="button" class="btn btn-secondary" (click)="openLogin()">Login Instead</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

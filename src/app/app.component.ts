@@ -25,6 +25,15 @@ export class AppComponent {
   title = "Auto Parts Exchange"
   searchQuery = ""
 
+  isSidebarOpen = false
+  isSettingsOpen = false
+  isLoginOpen = false
+  isRegisterOpen = false
+  activeTab = "dashboard"
+
+  loginData = { email: "", password: "" }
+  registerData = { name: "", email: "", password: "", confirmPassword: "" }
+
   featuredParts: AutoPart[] = [
     {
       id: 1,
@@ -77,5 +86,45 @@ export class AppComponent {
   onContactSeller(part: AutoPart) {
     console.log("Contacting seller for:", part.name)
     // TODO: Implement contact seller functionality
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen
+  }
+
+  toggleSettings() {
+    this.isSettingsOpen = !this.isSettingsOpen
+  }
+
+  openLogin() {
+    this.isLoginOpen = true
+    this.isRegisterOpen = false
+  }
+
+  openRegister() {
+    this.isRegisterOpen = true
+    this.isLoginOpen = false
+  }
+
+  closeModals() {
+    this.isSettingsOpen = false
+    this.isLoginOpen = false
+    this.isRegisterOpen = false
+  }
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab
+  }
+
+  onLogin() {
+    console.log("Login attempt:", this.loginData)
+    // TODO: Implement login functionality
+    this.closeModals()
+  }
+
+  onRegister() {
+    console.log("Register attempt:", this.registerData)
+    // TODO: Implement register functionality
+    this.closeModals()
   }
 }
