@@ -10,22 +10,22 @@
     </div>
     
     <nav class="sidebar-nav">
-      <button class="nav-item" [class.active]="activeTab === 'dashboard'" (click)="setActiveTab('dashboard')">
+      <button class="nav-item" [class.active]="currentRoute === 'dashboard'" (click)="setActiveTab('dashboard')">
         📊 Dashboard
       </button>
-      <button class="nav-item" [class.active]="activeTab === 'browse'" (click)="setActiveTab('browse')">
+      <button class="nav-item" [class.active]="currentRoute === 'browse'" (click)="setActiveTab('browse')">
         🔍 Browse Parts
       </button>
-      <button class="nav-item" [class.active]="activeTab === 'my-parts'" (click)="setActiveTab('my-parts')">
+      <button class="nav-item" [class.active]="currentRoute === 'my-parts'" (click)="setActiveTab('my-parts')">
         📦 My Parts
       </button>
-      <button class="nav-item" [class.active]="activeTab === 'messages'" (click)="setActiveTab('messages')">
+      <button class="nav-item" [class.active]="currentRoute === 'messages'" (click)="setActiveTab('messages')">
         💬 Messages
       </button>
-      <button class="nav-item" [class.active]="activeTab === 'favorites'" (click)="setActiveTab('favorites')">
+      <button class="nav-item" [class.active]="currentRoute === 'favorites'" (click)="setActiveTab('favorites')">
         ❤️ Favorites
       </button>
-      <button class="nav-item" [class.active]="activeTab === 'orders'" (click)="setActiveTab('orders')">
+      <button class="nav-item" [class.active]="currentRoute === 'orders'" (click)="setActiveTab('orders')">
         📋 Orders
       </button>
     </nav>
@@ -78,109 +78,124 @@
     </div>
   </div>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h2>Find the Perfect Auto Part</h2>
-        <p>Connect with trusted sellers and buyers through our secure platform</p>
-        
-        <div class="search-section">
-          <div class="search-bar">
-            <input 
-              type="text" 
-              [(ngModel)]="searchQuery"
-              placeholder="Search for parts, brands, or models..."
-              class="search-input"
-              (keyup.enter)="onSearch()"
-            >
-            <button class="btn btn-primary search-btn" (click)="onSearch()">
-              🔍 Search
-            </button>
-          </div>
-          
-          <div class="quick-filters">
-            <span class="filter-label">Popular:</span>
-            <button class="filter-tag">Brake Pads</button>
-            <button class="filter-tag">Headlights</button>
-            <button class="filter-tag">Bumpers</button>
-            <button class="filter-tag">Engines</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Parts -->
-  <section class="featured-parts">
-    <div class="container">
-      <h3>Featured Parts</h3>
-      <div class="parts-grid">
-        <div class="part-card card" *ngFor="let part of featuredParts">
-          <div class="part-image">
-            <img [src]="part.image" [alt]="part.name" />
-            <div class="condition-badge" [class]="part.condition.toLowerCase().replace(' ', '-')">
-              {{ part.condition }}
-            </div>
-          </div>
-          
-          <div class="part-info">
-            <h4>{{ part.name }}</h4>
-            <p class="part-details">{{ part.brand }} {{ part.model }} ({{ part.year }})</p>
-            <div class="part-meta">
-              <span class="price">${{ part.price }}</span>
-              <span class="location">📍 {{ part.location }}</span>
-            </div>
-            <p class="seller">Sold by: {{ part.seller }}</p>
+  <!-- Main Content Area -->
+  <main class="main-content">
+    
+    <!-- Dashboard - Default Landing Page (only when dashboard is active or default) -->
+    <div *ngIf="currentRoute === 'dashboard'">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h2>Find the Perfect Auto Part</h2>
+            <p>Connect with trusted sellers and buyers through our secure platform</p>
             
-            <button class="btn btn-primary contact-btn" (click)="onContactSeller(part)">
-              Contact Seller
-            </button>
+            <div class="search-section">
+              <div class="search-bar">
+                <input 
+                  type="text" 
+                  [(ngModel)]="searchQuery"
+                  placeholder="Search for parts, brands, or models..."
+                  class="search-input"
+                  (keyup.enter)="onSearch()"
+                >
+                <button class="btn btn-primary search-btn" (click)="onSearch()">
+                  🔍 Search
+                </button>
+              </div>
+              
+              <div class="quick-filters">
+                <span class="filter-label">Popular:</span>
+                <button class="filter-tag">Brake Pads</button>
+                <button class="filter-tag">Headlights</button>
+                <button class="filter-tag">Bumpers</button>
+                <button class="filter-tag">Engines</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- How It Works -->
-  <section class="how-it-works">
-    <div class="container">
-      <h3>How It Works</h3>
-      <div class="steps-grid">
-        <div class="step card">
-          <div class="step-icon">🔍</div>
-          <h4>1. Search & Browse</h4>
-          <p>Find the exact part you need from our extensive database of listings</p>
+      <!-- Featured Parts -->
+      <section class="featured-parts">
+        <div class="container">
+          <h3>Featured Parts</h3>
+          <div class="parts-grid">
+            <div class="part-card card" *ngFor="let part of featuredParts">
+              <div class="part-image">
+                <img [src]="part.image" [alt]="part.name" />
+                <div class="condition-badge" [class]="part.condition.toLowerCase().replace(' ', '-')">
+                  {{ part.condition }}
+                </div>
+              </div>
+              
+              <div class="part-info">
+                <h4>{{ part.name }}</h4>
+                <p class="part-details">{{ part.brand }} {{ part.model }} ({{ part.year }})</p>
+                <div class="part-meta">
+                  <span class="price">${{ part.price }}</span>
+                  <span class="location">📍 {{ part.location }}</span>
+                </div>
+                <p class="seller">Sold by: {{ part.seller }}</p>
+                
+                <button class="btn btn-primary contact-btn" (click)="onContactSeller(part)">
+                  Contact Seller
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div class="step card">
-          <div class="step-icon">🤝</div>
-          <h4>2. Connect Safely</h4>
-          <p>We facilitate secure connections between buyers and sellers</p>
-        </div>
-        
-        <div class="step card">
-          <div class="step-icon">✅</div>
-          <h4>3. Complete Transaction</h4>
-          <p>Complete your purchase with confidence through our trusted platform</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container">
-      <div class="cta-content">
-        <h3>Ready to Start Trading?</h3>
-        <p>Join thousands of auto enthusiasts buying and selling parts</p>
-        <div class="cta-buttons">
-          <button class="btn btn-primary" (click)="onSearch()">Browse Parts</button>
-          <button class="btn btn-secondary" (click)="onListPart()">List Your Parts</button>
+      <!-- How It Works -->
+      <section class="how-it-works">
+        <div class="container">
+          <h3>How It Works</h3>
+          <div class="steps-grid">
+            <div class="step card">
+              <div class="step-icon">🔍</div>
+              <h4>1. Search & Browse</h4>
+              <p>Find the exact part you need from our extensive database of listings</p>
+            </div>
+            
+            <div class="step card">
+              <div class="step-icon">🤝</div>
+              <h4>2. Connect Safely</h4>
+              <p>We facilitate secure connections between buyers and sellers</p>
+            </div>
+            
+            <div class="step card">
+              <div class="step-icon">✅</div>
+              <h4>3. Complete Transaction</h4>
+              <p>Complete your purchase with confidence through our trusted platform</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-content">
+            <h3>Ready to Start Trading?</h3>
+            <p>Join thousands of auto enthusiasts buying and selling parts</p>
+            <div class="cta-buttons">
+              <button class="btn btn-primary" (click)="setActiveTab('browse')">Browse Parts</button>
+              <button class="btn btn-secondary" (click)="onListPart()">List Your Parts</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+
+    <!-- Route to Other Components -->
+    <app-browse *ngIf="currentRoute === 'browse'"></app-browse>
+    <app-my-parts *ngIf="currentRoute === 'my-parts'"></app-my-parts>
+    <app-messages *ngIf="currentRoute === 'messages'"></app-messages>
+    <app-favorites *ngIf="currentRoute === 'favorites'"></app-favorites>
+    <app-orders *ngIf="currentRoute === 'orders'"></app-orders>
+
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
@@ -194,9 +209,9 @@
         <div class="footer-section">
           <h5>Quick Links</h5>
           <ul>
-            <li><a href="#">Browse Parts</a></li>
-            <li><a href="#">List a Part</a></li>
-            <li><a href="#">How It Works</a></li>
+            <li><a href="#" (click)="setActiveTab('browse'); $event.preventDefault()">Browse Parts</a></li>
+            <li><a href="#" (click)="onListPart(); $event.preventDefault()">List a Part</a></li>
+            <li><a href="#" (click)="setActiveTab('dashboard'); $event.preventDefault()">How It Works</a></li>
             <li><a href="#">Support</a></li>
           </ul>
         </div>
@@ -204,10 +219,10 @@
         <div class="footer-section">
           <h5>Categories</h5>
           <ul>
-            <li><a href="#">Engine Parts</a></li>
-            <li><a href="#">Body Parts</a></li>
-            <li><a href="#">Electrical</a></li>
-            <li><a href="#">Interior</a></li>
+            <li><a href="#" (click)="setActiveTab('browse'); $event.preventDefault()">Engine Parts</a></li>
+            <li><a href="#" (click)="setActiveTab('browse'); $event.preventDefault()">Body Parts</a></li>
+            <li><a href="#" (click)="setActiveTab('browse'); $event.preventDefault()">Electrical</a></li>
+            <li><a href="#" (click)="setActiveTab('browse'); $event.preventDefault()">Interior</a></li>
           </ul>
         </div>
       </div>

@@ -1,6 +1,11 @@
 import { Component } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
+import { BrowseComponent } from "./pages/browse/browse.component"
+import { FavoritesComponent } from "./pages/favorites/favorites.component"
+import { MessagesComponent } from "./pages/messages/messages.component"
+import { MyPartsComponent } from "./pages/my-parts/my-parts.component"
+import { OrdersComponent } from "./pages/orders/orders.component"
 
 interface AutoPart {
   id: number
@@ -17,7 +22,15 @@ interface AutoPart {
 
 @Component({
   selector: "app-root",
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule, 
+    FormsModule,
+    BrowseComponent,
+    FavoritesComponent,
+    MessagesComponent,
+    MyPartsComponent,
+    OrdersComponent
+  ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
@@ -29,7 +42,8 @@ export class AppComponent {
   isSettingsOpen = false
   isLoginOpen = false
   isRegisterOpen = false
-  activeTab = "dashboard"
+  
+  currentRoute = "dashboard"
 
   loginData = { email: "", password: "" }
   registerData = { name: "", email: "", password: "", confirmPassword: "" }
@@ -75,17 +89,16 @@ export class AppComponent {
 
   onSearch() {
     console.log("Searching for:", this.searchQuery)
-    // TODO: Implement search functionality
+    this.setActiveTab('browse')
   }
 
   onListPart() {
     console.log("Opening list part form")
-    // TODO: Implement list part functionality
+    this.setActiveTab('my-parts')
   }
 
   onContactSeller(part: AutoPart) {
     console.log("Contacting seller for:", part.name)
-    // TODO: Implement contact seller functionality
   }
 
   toggleSidebar() {
@@ -99,11 +112,13 @@ export class AppComponent {
   openLogin() {
     this.isLoginOpen = true
     this.isRegisterOpen = false
+    this.isSettingsOpen = false
   }
 
   openRegister() {
     this.isRegisterOpen = true
     this.isLoginOpen = false
+    this.isSettingsOpen = false
   }
 
   closeModals() {
@@ -113,18 +128,17 @@ export class AppComponent {
   }
 
   setActiveTab(tab: string) {
-    this.activeTab = tab
+    this.currentRoute = tab
+    this.toggleSidebar()
   }
 
   onLogin() {
     console.log("Login attempt:", this.loginData)
-    // TODO: Implement login functionality
     this.closeModals()
   }
 
   onRegister() {
     console.log("Register attempt:", this.registerData)
-    // TODO: Implement register functionality
     this.closeModals()
   }
 }
