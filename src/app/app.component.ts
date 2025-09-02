@@ -85,6 +85,18 @@ export class AppComponent {
       image: "/ford-f-150-tailgate-truck-parts.png",
       seller: "Truck Parts Hub",
     },
+        {
+      id: 4,
+      name: "Rear Door",
+      brand: "Rolls Royce",
+      model: "Flying Spur II",
+      year: "2025",
+      price: 4500,
+      condition: "New",
+      location: "Germany",
+      image: "/rolls-royce-phantom-5120x2880-23523.jpg",
+      seller: "Rolls Royce Deustchland",
+    },
   ]
 
   onSearch() {
