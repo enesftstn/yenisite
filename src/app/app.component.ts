@@ -116,7 +116,7 @@ export class AppComponent {
       model: "S-680",
       year: "2020",
       price: 900,
-      condition: "Used - Good",
+      condition: "Like New",
       location: "Turkey, Istanbul",
       image: "/honda-civic-headlights.png",
       seller: "Mercedes Benz Türk A.Ş.",
