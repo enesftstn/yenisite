@@ -109,6 +109,18 @@ export class AppComponent {
       image: "/motroc-tudor-render-2-artstation.jpg",
       seller: "Jews",
     },
+    {
+      id: 5,
+      name: "Xenon Headlights",
+      brand: "Mercedes",
+      model: "S-680",
+      year: "2020",
+      price: 900,
+      condition: "Used - Good",
+      location: "Turkey, Istanbul",
+      image: "/honda-civic-headlights.png",
+      seller: "Mercedes Benz Türk A.Ş.",
+    },
   ]
 
   onSearch() {
